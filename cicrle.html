@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    
+    <script src="paper-full.js"></script>
+    <script src="howler.js"></script>
+    <link rel="stylesheet" href="color.css">
+    <!-- Define inlined PaperScript associate it with myCanvas -->
+    <script type="text/paperscript" canvas="myCanvas">
+    
+    var keyData = {
+    a: {
+     color: "purple",
+     sound: new Howl({
+          src: ['sounds/bubbles.mp3']
+        })
+    },
+    
+    s: {
+     color: "black",
+     sound: new Howl({
+          src: ['sounds/clay.mp3']
+        })
+    },
+    
+    d: {
+     color: "white",
+     sound: new Howl({
+          src: ['sounds/confetti.mp3']
+        })
+    }
+        
+    
+    }
+    
+         var circles = [];
+         
+        function onKeyDown(event){
+        if(keyData[event.key]){
+        var maxPoint = new Point(view.size.width, view.size.height);
+        var randomPoint = Point.random(); 
+        var point = maxPoint * randomPoint; 
+        var newCircle = new Path.Circle(point, 300)
+        newCircle.fillColor = keyData[event.key].color;
+        keyData[event.key].sound.play();
+        circles.push(newCircle);
+        
+       }
+        
+        }
+
+       var animatedCircle = new Path.Circle(new Point(300, 300), 100);
+       animatedCircle.fillColor = "red";
+       
+       function onFrame(event){
+       for(var i = 0; i < circles.length; i++){
+       circles[i].fillColor.hue += 1;
+       circles[i].scale(.9);
+       }
+       animatedCircle.fillColor.hue += 1;
+       
+       }
+        
+        
+        
+    </script>
+
+    <head>
+
+        <body>
+
+
+
+
+
+
+
+            <canvas id="myCanvas" resize></canvas>
+        </body>
+
+</html>
